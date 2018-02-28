@@ -55,10 +55,17 @@
         document.getElementById("img1").onclick = function() {
             EXIF.getData(this, function() {
                 var make = EXIF.getTag(this, "GPSLongitude"),
-                    model = EXIF.getTag(this, "GPSLongitude");
-                alert("I was taken by a " + make + " " + model);
+                    model = EXIF.getTag(this, "GPSlatitude");
+                var longtitude=toDecimal(make);
+                var latitude=toDecimal(model);
+                alert("Longtitude: " + longtitude+"," + " latitude:" + latitude);
             });
         }
+        
+        var toDecimal = function (number) {
+                return number[0].numerator + number[1].numerator /
+                (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
+        };
 
         document.getElementById("img2").onclick = function() {
             EXIF.getData(this, function() {
