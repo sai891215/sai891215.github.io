@@ -54,8 +54,8 @@
         
         document.getElementById("img1").onclick = function() {
             EXIF.getData(this, function() {
-                var make = EXIF.getTag(this, "Make"),
-                    model = EXIF.getTag(this, "Model");
+                var make = EXIF.getTag(this, "GPSLongitude"),
+                    model = EXIF.getTag(this, "GPSLongitude");
                 alert("I was taken by a " + make + " " + model);
             });
         }
