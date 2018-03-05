@@ -1,18 +1,18 @@
-       var imgWidth=img.width*imgHeight/img.height;
 // Daniel Shiffman
 // http://codingtra.in
 // Earthquake Data Viz
 // Video: https://youtu.be/ZiYdOwOrGyc
-
+var send = [];
 var mapimg;
 var img;
-var clat = 40.4144781;
-var clon = -79.9783304;
+var clat = 40.411153;
+var clon = -79.944564;
+
 var myDiv0, myDiv1;
 var ww = 1024;
 var hh = 1024;
 var l1, l2;
-var zoom = 10.9;
+var zoom = 12.6;
 var earthquakes;
 var cx, cy;
 var input;
@@ -24,10 +24,15 @@ var img1;
 var myLon = [];
 var total = 2;
 var myLa = [];
-
+var jsonData = [];
+var GlobalData = [];
+var number = 0;
+var loadNumber = 0;
+var tabble2;
+var jsonData;
 
 function preload() {
-  img = loadImage("img1.jpeg");
+  // img = loadImage("img1.jpeg");
   table = loadTable('https://docs.google.com/spreadsheets/d/1lm1NtSv3NMnstnrst7WHbuRE-fSXPnDSDAMNKkp0pZM/edit?usp=sharing', 'csv', 'header');
 
   // The clon and clat in this url are edited to be in the correct order.
@@ -38,16 +43,39 @@ function preload() {
   // earthquakes = loadStrings('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv');
   earthquakes = loadStrings('restaurants.csv');
 
+  // Tabletop.init({
+  //   key: '1lm1NtSv3NMnstnrst7WHbuRE-fSXPnDSDAMNKkp0pZM',
+  //   callback: gotData,
+  //   simpleSheet: true
+
+  // });
   Tabletop.init({
     key: '1lm1NtSv3NMnstnrst7WHbuRE-fSXPnDSDAMNKkp0pZM',
     callback: gotData,
     simpleSheet: true
   });
 
+
+  for (var i = 0; i < httpsString.length; i++) {
+    if (httpsString[i]) {
+
+      print("loading");
+      var li = httpsString[i];
+      // var img3= createImage("image.jpeg");  
+      var link = "https://api.rethumb.com/v1/exif/all/" + li;
+      print(link);
+      GlobalData[i] = loadJSON(link);
+    }
+  }
   // var tt= createImg('drive.google.com/uc?id=1-wUu599XyMtKsGqT2PxLTIODGRVD86Uv&export=download');
   // tt.id("yes");
 
   // print(l1);
+}
+
+function gotData(stuff, tabletop) {
+  data = stuff;
+  print("got data");
 }
 
 function mercX(lon) {
@@ -72,31 +100,25 @@ function setup() {
   translate(width / 2, height / 2);
   imageMode(CENTER);
 
-  var ii = 1;
-  while (table.getString(ii, 0).length > 50) {
+  // var ii = 1;
+  // while (table.getString(ii, 0).length > 50) {
+  //   // print(table.getString(ii, 0));
+  //   // var newHttps = join(splitTokens(trim(table.getString(ii, 0)), ' '), '');
+  //   httpsString[ii - 1] = newHttps;
+  //   URL = "https://api.rethumb.com/v1/exif/all/http://" + newHttps;
 
-    var newHttps = join(splitTokens(trim(table.getString(ii, 0)), ' '), '');
+  //   // print(newHttps);
+  //   ii++;
+  // }
 
-    httpsString[ii - 1] = newHttps;
-    print(newHttps);
-    ii++;
-  }
+  // if (jsonData) {
+  //   for (var j = 0; j < 3; j++) {
 
-
-  for (var j = 0; j < total; j++) {
-    // print(httpsString[j]);
-    var t="img" + j+".jpeg";
-    img[j] = createImg(t);
-    // // img[1].id("yes");
-    var id="img" + j;
-    img[j].id(id);
-
-
-  }
-  
-  // var img3= createImage("image.jpeg");  
-
-
+  //     img[j] = createImg(jsonData[j]["Web"]);
+  //     send[j] = false;
+  //     print("img is added");
+  //   }
+  // }
 
 
 
@@ -104,119 +126,159 @@ function setup() {
   cx = mercX(clon);
   cy = mercY(clat);
 
+  // for (var i = 0; i < httpsString.length; i++) {
 
 
-  for (var k = 0; k < total; k++) {
-    var tt="img"+k;
-    print(tt);
-    
-    
-    var img2 = document.getElementById(tt);
-    
-    EXIF.getData( img2, function() {
-      var make = EXIF.getTag(this, "GPSLongitude"),
-        model = EXIF.getTag(this, "GPSLatitude");
-      var l1 = toDecimal(make);
-      var l2 = toDecimal(model);
-      myLon[k] = createDiv(l1);
-      myLa[k] = createDiv(l2);
-      myLon[k].id('lo');
-      myLa[k].id('la');
-      print(tt);
-    });
-   
-    
-    
-  }
-  
-    var toDecimal = function(number) {
-      return number[0].numerator + number[1].numerator /
-        (60 * number[1].denominator) + number[2].numerator / (3600 * number[2].denominator);
-    };
+  //     print("loading");
+  //     var li = jsonData[i]["Web"];;
+  //     // print(li);
+  //     // var img3= createImage("image.jpeg");  
+  //     var link = "https://api.rethumb.com/v1/exif/all/" + li;
 
-  // print(data);
 
-  //   while (table.getString(ii, 0).length > 50) {
-  //     var newHttps = join(splitTokens(trim(table.getString(ii, 0)), ' '), '');
-  //     httpsString[ii - 1] = newHttps;
-  //     ii++;
-  // //    break;
-  //   }
+  //     loadJSON(link, gotdata);
 
-  // for (var j = 0; j < httpsString.length; j++) {
-  //   // print(httpsString[j]);
-  //   imgArr[j] = createImg(httpsString[j]);
   // }
 
 
-  // EXIF.getData(document.getElementById("img1"), function() {
-  //   var make = EXIF.getTag(this, "GPSLongitude"),
-  //     model = EXIF.getTag(this, "GPSLatitude");
-  //   var l1 = toDecimal(make);
-  //   var l2 = toDecimal(model);
-  //   myDiv[k] = createDiv(l1);
-  //   myDiv[k].id("longtitude");
-  //   myDiv[k] = createDiv(l2);
-  //   myDiv[k].id("latitude");
-  // });
+  // if (httpsString[number] && number < httpsString.length) {
+  //   var li = httpsString[number];
+  //   print("loading");
+  //   // var img3= createImage("image.jpeg");  
+  //   var link = "https://api.rethumb.com/v1/exif/all/" + li;
+  //   print(link);
+  //   loadJSON(link, gotdata);
+  // }
 }
 
 
+this.gotdata = function(data) {
+  print("jasonLoading");
+  GlobalData[loadNumber] = data.GPS;
+  print(GlobalData[loadNumber]);
+
+}
+
+this.toDecimal = function(number) {
+  var n1 = split(number[0], '/')[0];
+  var n2 = split(number[1], '/')[0];
+  var n3 = split(number[2], '/')[0] / 100;
+
+  return (float(n1) + float(n2) / (60) + float(n3) / (3600));
+};
 
 
 
 
 function gotData(stuff, tabletop) {
-  data = stuff;
+  jsonData = stuff;
+
+  for (var j = 0; j < jsonData.length; j++) {
+    httpsString[j] = join(splitTokens(jsonData[j]["Web"], ' '), '');
+    print(httpsString[j]);
+    imgArr[j] = createImg(httpsString[j]);
+    imgArr[j].hide();
+    send[j] = false;
+    print("img is added");
+  }
+
 }
 
 function draw() {
+
+  // print(table);
+
+  if (jsonData != null) {
+    if (GlobalData[loadNumber] && loadNumber < httpsString.length) {
+      loadNumber++;
+      print("yes+1" + loadNumber);
+    }
+    if (!GlobalData[loadNumber] && send[loadNumber] == false) {
+
+
+      var link = "https://api.rethumb.com/v1/exif/all/" + httpsString[loadNumber];
+
+      print(link);
+      loadJSON(link, gotdata);
+
+      send[loadNumber] = true;
+    }
+  }
+  //    
+  //  
+  // for (var i = 0; i < httpsString.length; i++) {
+
+  //   if (!GlobalData[i]) {
+  //     // Wait until the earthquake data has loaded before drawing.
+  //     return;
+  //   }
+  // }
+
+
+
+  //   if (httpsString[loadNumber]) {
+  //     if (send[loadNumber] == false) {
+  //       var li = httpsString[loadNumber];
+  //       var link = "https://api.rethumb.com/v1/exif/all/" + li;
+  //       print(link);
+  //       send[loadNumber] = true;
+  //       print("loading" + loadNumber);
+  //       loadJSON(link, gotdata);
+
+
+
+
+  //     });
+  //   print("yes");
+  // } else {
+  //   if (GlobalData[loadNumber] != null && loadNumber < httpsString.length) {
+  //     print("continue")
+  //     loadNumber++;
+
+
+  //   }
+  // }
+  // }
+
+
+
   translate(width / 2, height / 2);
   image(mapimg, 0, 0);
   imageMode(CENTER);
+  //
+  for (var j = 0; j < GlobalData.length; j++) {
+    if (GlobalData[j]) {
 
- var la = document.getElementById('la').innerHTML;
- var lo = document.getElementById('lo').innerHTML;
- print(la);
-  for (var i = 0; i < total; i++) {
-    var yy="la" + i;
-    
-    // 
-   
-    //    text(la+" "+lo,0,0);
-    lon = -lo;
-    lat = la;
-    var x = mercX(lon) - cx;
-    var y = mercY(lat) - cy;
-    fill(255, 0, 100);
-    // print(x);
-    ellipse(x, y, 10, 10);
+      var lo = toDecimal(GlobalData[j].GPSLongitude);
+      var la = toDecimal(GlobalData[j].GPSLatitude);
+
+      lon = -lo;
+      lat = la;
+      var x = mercX(lon) - cx;
+      var y = mercY(lat) - cy;
+
+      fill(255, 0, 100);
+      noStroke();
+      // print(x);
+
+      ellipse(x, y, 10, 10);
+      var distance = dist(mouseX, mouseY, x + width / 2, y + height / 2);
+      if (distance < 10) {
+        
+        strokeWeight(2);
+        stroke(255);
+        //       var img1=createImg('http://ift.tt/2F4UNAx',40,40);
+        //       img1.position(x,y-40);
+        var imgHeight = map(imgArr[j].height, 0, imgArr[j].height, 0, 60);
+        var imgWidth = imgArr[0].width * imgHeight / imgArr[j].height;
+
+        image(imgArr[j], x, y - 40, imgWidth, imgHeight);
+      
+      } 
+    }
   }
-  
-  
-  
-
-  var distance = dist(mouseX, mouseY, x + width / 2, y + height / 2);
-  if (distance < 50) {
-    //       var img1=createImg('http://ift.tt/2F4UNAx',40,40);
-    //       img1.position(x,y-40);
-    var imgHeight = map(img.height, 0, img.height, 0, 60);
-    var imgWidth = img.width * imgHeight / img.height;
-    image(img, x, y - 40, imgWidth, imgHeight);
-    strokeWeight(2);
-    stroke(255);
-    noStroke();
-  }
 
 
 
-// for (var j = 0; j < img.length; j++) {
-//   // print(httpsString[j]);
-
-//   if (img[j] != null) {
-//     img[j].hide;
-//     image(img[j], 100 * j, 0, 100, 100);
-//   }
-// }
 
 }
