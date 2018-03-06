@@ -12,7 +12,7 @@ var myDiv0, myDiv1;
 var ww = 1024;
 var hh = 1024;
 var l1, l2;
-var zoom = 12.6;
+var zoom = 13.9;
 var earthquakes;
 var cx, cy;
 var input;
@@ -39,16 +39,8 @@ function preload() {
   mapimg = loadImage('https://api.mapbox.com/styles/v1/mapbox/dark-v9/static/' +
     clon + ',' + clat + ',' + zoom + '/' +
     ww + 'x' + hh +
-    '?access_token=pk.eyJ1IjoiY29kaW5ndHJhaW4iLCJhIjoiY2l6MGl4bXhsMDRpNzJxcDh0a2NhNDExbCJ9.awIfnl6ngyHoB3Xztkzarw');
-  // earthquakes = loadStrings('http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.csv');
-  earthquakes = loadStrings('restaurants.csv');
+    '?access_token=pk.eyJ1IjoiY29kaW5ndHJhaW4iLCJhIjoiY2l6MGl4bXhsMDRpNzJxcDh0a2NhNDExbCJ9.awIfnl6ngyHoB3Xztkzarw',GotImage);
 
-  // Tabletop.init({
-  //   key: '1lm1NtSv3NMnstnrst7WHbuRE-fSXPnDSDAMNKkp0pZM',
-  //   callback: gotData,
-  //   simpleSheet: true
-
-  // });
   Tabletop.init({
     key: '1lm1NtSv3NMnstnrst7WHbuRE-fSXPnDSDAMNKkp0pZM',
     callback: gotData,
@@ -67,10 +59,7 @@ function preload() {
       GlobalData[i] = loadJSON(link);
     }
   }
-  // var tt= createImg('drive.google.com/uc?id=1-wUu599XyMtKsGqT2PxLTIODGRVD86Uv&export=download');
-  // tt.id("yes");
 
-  // print(l1);
 }
 
 function gotData(stuff, tabletop) {
@@ -95,11 +84,11 @@ function mercY(lat) {
 
 
 function setup() {
-
-  createCanvas(ww, hh);
+  
+  var cnv=createCanvas(windowWidth, windowHeight);
+  cnv.style('display', 'block');
   translate(width / 2, height / 2);
   imageMode(CENTER);
-
   // var ii = 1;
   // while (table.getString(ii, 0).length > 50) {
   //   // print(table.getString(ii, 0));
@@ -110,45 +99,11 @@ function setup() {
   //   // print(newHttps);
   //   ii++;
   // }
-
-  // if (jsonData) {
-  //   for (var j = 0; j < 3; j++) {
-
-  //     img[j] = createImg(jsonData[j]["Web"]);
-  //     send[j] = false;
-  //     print("img is added");
-  //   }
-  // }
-
-
-
-
+ 
   cx = mercX(clon);
   cy = mercY(clat);
 
-  // for (var i = 0; i < httpsString.length; i++) {
 
-
-  //     print("loading");
-  //     var li = jsonData[i]["Web"];;
-  //     // print(li);
-  //     // var img3= createImage("image.jpeg");  
-  //     var link = "https://api.rethumb.com/v1/exif/all/" + li;
-
-
-  //     loadJSON(link, gotdata);
-
-  // }
-
-
-  // if (httpsString[number] && number < httpsString.length) {
-  //   var li = httpsString[number];
-  //   print("loading");
-  //   // var img3= createImage("image.jpeg");  
-  //   var link = "https://api.rethumb.com/v1/exif/all/" + li;
-  //   print(link);
-  //   loadJSON(link, gotdata);
-  // }
 }
 
 
@@ -168,8 +123,6 @@ this.toDecimal = function(number) {
 };
 
 
-
-
 function gotData(stuff, tabletop) {
   jsonData = stuff;
 
@@ -181,12 +134,33 @@ function gotData(stuff, tabletop) {
     send[j] = false;
     print("img is added");
   }
+  // var header=createDiv("This is header");
+  // header.position(30,30);
+  // header.style('display','absolute');
 
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+function GotImage(mapping){
+  mapping=mapping;
+  
 }
 
 function draw() {
-
-  // print(table);
+   
+   
+  // if(windowWidth!=ww || windowHeight!=hh){
+    
+  //   ww=windowWidth;
+  //   hh=windowHeight;
+  //   print(ww);
+  //   loadImage('https://api.mapbox.com/styles/v1/mapbox/dark-v9/static/' +
+  //   clon + ',' + clat + ',' + zoom + '/' +
+  //   ww + 'x' + hh +
+  //   '?access_token=pk.eyJ1IjoiY29kaW5ndHJhaW4iLCJhIjoiY2l6MGl4bXhsMDRpNzJxcDh0a2NhNDExbCJ9.awIfnl6ngyHoB3Xztkzarw',GotImage);
+  //   }
 
   if (jsonData != null) {
     if (GlobalData[loadNumber] && loadNumber < httpsString.length) {
@@ -204,43 +178,8 @@ function draw() {
       send[loadNumber] = true;
     }
   }
-  //    
-  //  
-  // for (var i = 0; i < httpsString.length; i++) {
-
-  //   if (!GlobalData[i]) {
-  //     // Wait until the earthquake data has loaded before drawing.
-  //     return;
-  //   }
-  // }
-
-
-
-  //   if (httpsString[loadNumber]) {
-  //     if (send[loadNumber] == false) {
-  //       var li = httpsString[loadNumber];
-  //       var link = "https://api.rethumb.com/v1/exif/all/" + li;
-  //       print(link);
-  //       send[loadNumber] = true;
-  //       print("loading" + loadNumber);
-  //       loadJSON(link, gotdata);
-
-
-
-
-  //     });
-  //   print("yes");
-  // } else {
-  //   if (GlobalData[loadNumber] != null && loadNumber < httpsString.length) {
-  //     print("continue")
-  //     loadNumber++;
-
-
-  //   }
-  // }
-  // }
-
-
+  
+// var a=createA('http://p5js.org/', 'this is a link');
 
   translate(width / 2, height / 2);
   image(mapimg, 0, 0);
@@ -259,26 +198,42 @@ function draw() {
 
       fill(255, 0, 100);
       noStroke();
-      // print(x);
-
-      ellipse(x, y, 10, 10);
+      ellipse(x,y,10,10);
+      // var c=createA('');
+      // c.position(x +width/2,y+height/2);
+      // c.style('width','10px');
+      // c.style('height','10px');
+      // c.style('background-color','red');
       var distance = dist(mouseX, mouseY, x + width / 2, y + height / 2);
-      if (distance < 10) {
+      if (distance < 20) {
         
-        strokeWeight(2);
-        stroke(255);
-        //       var img1=createImg('http://ift.tt/2F4UNAx',40,40);
-        //       img1.position(x,y-40);
-        var imgHeight = map(imgArr[j].height, 0, imgArr[j].height, 0, 60);
+       stroke(255);
+        // var img1=createImg('http://ift.tt/2F4UNAx',40,40);
+       
+        var imgHeight = map(imgArr[j].height, 0, imgArr[j].height, 0, 120);
         var imgWidth = imgArr[0].width * imgHeight / imgArr[j].height;
 
-        image(imgArr[j], x, y - 40, imgWidth, imgHeight);
+        image(imgArr[j], x, y - 60, imgWidth, imgHeight);
+        if(mouseIsPressed){
+          
+          window.open(httpsString[j].replace('download',''));
+          noLoop();
+        }
+
       
       } 
     }
   }
-
-
-
-
+  textFont('Georgia');
+  textSize(36);
+  fill(255);
+  text("Data Visualization of Illegel Dumping in Hazelwood",0,-height/2+80);
+  textAlign(CENTER);
 }
+function unHighLighted() {
+ this.style('background-color','yellow');
+}
+function highLighted() {
+ this.style("background-color","yellow")
+}
+
