@@ -12,16 +12,29 @@
     <script>
       var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL3-final2.json", {onProgress: UnityProgress});
     </script>
+    <style>
+        .fullscreen1{
+            position: absolute;
+            bottom: 2em;
+            right:2em;
+        }
+      </style>
   </head>
   <body>
     <div class="webgl-content">
      
       <div id="gameContainer" style="width: 100vw; height: 100vh"></div>
       <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">kuafu</div>
+<!--        <div class="webgl-logo"></div>-->
+        <div class="fullscreen1" onclick="gameInstance.SetFullscreen(1)">
+            <img src="full2.png" alt="full screen" heigth="42" width="42">
+            
+        </div>
+        
+<!--        <div class="title">kuafu</div>-->
       </div>
     </div>
   </body>
 </html>
+
+
