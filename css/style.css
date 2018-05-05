@@ -1,0 +1,196 @@
+@import 'reset.css';
+
+html {
+    font-size: 13px;
+    line-height: 21pt;
+    font-family: 'Brandon Text', sans-serif;
+    font-weight: 300;
+}
+
+h1 { 
+    font-family: 'Brandon Text', sans-serif;
+    font-size: 3em;
+    font-weight: 500;
+    padding-bottom: .5em;
+    line-height: 2em;
+    /*color:darkslategray;*/
+}
+
+h2 {
+    font-size: 3em;
+    font-weight:300;
+    padding-bottom: .5em;
+}
+h3 {
+    font-size: 1.2em;
+    font-weight: 300;
+    padding-bottom: 1em;
+    font-family: 'Andale Mono', sans-serif;
+}
+
+p, em {
+    font-size: 1.2em;
+    line-height: 1.3em; 
+    padding-bottom: .5em;
+}
+
+.homecontainer{
+  z-index:2;
+}
+.clear {
+    clear: both;
+}
+
+body {
+    background-image: url(../images/yi-backgroundimage.png);
+    background-size: 100%;
+}
+
+
+/*======nav======*/
+.nav ul li a{
+    text-decoration: none;
+    color: black;
+    font-size: 1em;
+    font-weight: 300;
+}
+
+/*===images===*/
+.logo {
+    width: 50px;
+  
+}
+
+nav ul li {
+    display:inline-block;
+    margin-left: 2em;
+}
+
+.nav {
+    text-align: right;
+    margin-top: 30px;
+}
+
+.darken {
+    position:fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+ .hill {
+    bottom: -5vw;
+    left: -5vw;
+     width: 110vw;
+     position:fixed;
+}
+
+.sun {
+    width: 95vw;
+    position: fixed;
+    top: 10px;
+    left: 0px;
+}
+
+.startjourney {
+    /*mix-blend-mode: multiply;*/
+    width: 150px;
+    z-index: 100;
+}
+.hill, .sun{
+    will-change: transform; 
+    transition:transform 1.2s ease-in-out;
+    transition-timing-function: cubic-bezier(.28,.63,.77,.92)
+    
+}
+.title1{
+ 
+  width:600px;
+  margin-bottom:10px;
+  
+}
+.title{
+ 
+   z-index:10;
+}
+#start {
+    /*mix-blend-mode: darken;*/
+}
+/*
+#top-image {
+background:url('https://d3ui957tjb5bqd.cloudfront.net/images/screenshots/products/0/8/8905/red-rocks-park-o.jpg') -25px -50px;
+position:fixed ;
+top:0;
+width:100%;
+z-index:0;
+  height:100%;
+  background-size: calc(100% + 50px);
+}
+*/
+
+/*=====BODY=====*/
+.title {
+    text-align:center;
+    position:absolute;
+    top: 15vw;
+}
+
+.button {
+    margin-top: 1em;
+}
+
+.bottomtext {
+    margin-top: 48vh;
+    position: absolute;
+    bottom: 80px;   
+}
+.b1, .b2 {
+    position:absolute;
+    bottom: 50px;
+}
+
+.b2 {
+    left: 150px;
+    bottom: 
+}
+.bottomtext p{
+    color: #fff;
+    font-weight:100;
+    
+}
+.darken{
+  z-index:0;
+}
+
+.bottomimage p{
+    color:#fff;
+    font-weight:100;
+    font-size: 0.9em;
+    line-height: 1.5em;
+   
+}
+.bottom{
+  z-index:12;
+}
+.b1{
+    display:inline-block;
+}
+
+.nav-container {
+    padding: 20px 30px;
+  
+}
+
+.content {
+    padding: 20px 50px;
+}
+
+.bottom {
+    padding: 20px 30px;
+    position: fixed;
+    bottom: 30px;
+}
+
+/*=======About page=======*/
+.content{
+    margin-top: 20vh;
+}

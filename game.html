@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
+    <title>Unity WebGL Player | kuafu</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <script src="TemplateData/UnityProgress.js"></script>  
+    <script src="Build/UnityLoader.js"></script>
+    <script>
+      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/WebGL3-final2.json", {onProgress: UnityProgress});
+    </script>
+    <style>
+        .fullscreen1{
+            position: absolute;
+            bottom: 4em;
+            right:2em;
+        }
+      </style>
+  </head>
+  <body>
+    <div class="webgl-content">
+     
+      <div id="gameContainer" style="width: 100vw; height: 100vh"></div>
+      <div class="footer">
+<!--        <div class="webgl-logo"></div>-->
+        <div class="fullscreen1" onclick="gameInstance.SetFullscreen(1)">
+            <img src="full2.png" alt="full screen" heigth="42" width="42">
+            
+        </div>
+        
+<!--        <div class="title">kuafu</div>-->
+      </div>
+    </div>
+  </body>
+</html>
+
+
