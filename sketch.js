@@ -1,7 +1,18 @@
 var x,y, x1,y1,x2,y2,x3,y3,x4,y4,TargetX,TargetY,a,b;
-
+var song;
 var sun=[];
+
+
+
+
+// function preload() {
+//   song = loadSound('opening scene.mp3');
+// }
 function setup() {
+  
+  
+ 
+  
   x=0;
   y=0;
   a=0;
@@ -11,9 +22,11 @@ function setup() {
   for(var i=0;i<6;i++){
     sun[i]=createImg("images/suns/sun.png")
   }
+  // song.loop();
 }
 
 function draw() {
+  // song.play();
   // createCanvas(windowWidth, windowHeight);
   // background(0);
   
@@ -26,7 +39,8 @@ function draw() {
   
   randomSeed(9);
   for(var i=0;i<6;i++){
-    var size=random(150,300)
+    
+    var size=random(150,300);
     nx=(noise(i+a)-.5)*260;
     ny=(noise(i+b)-.5)*260;
    
@@ -55,7 +69,20 @@ function draw() {
   // rect(200+x4,300+y4,100,100);
   a+=0.002;
   b+=0.002;
+  
+  
+  
+ 
 }
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+// function mousePressed() {
+//   if ( song.isPlaying() ) { // .isPlaying() returns a boolean
+//     song.stop();
+//     background(255,0,0);
+//   } else {
+//     song.play();
+//     background(0,255,0);
+//   }
+// }
