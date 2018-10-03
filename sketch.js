@@ -1,88 +1,74 @@
-var x,y, x1,y1,x2,y2,x3,y3,x4,y4,TargetX,TargetY,a,b;
-var song;
-var sun=[];
+// this program is written in P5.js by Wu Shengzhi(www.wushengzhi.xyz)
+// I load every pixel of an image and map image data into 3 dimensional vector, inclusing X position, Y position and pixel brightness
+// the brightness is demonstrated by the ellipse size, the darker, the bigger
+// then every pixel is added into a particle system and then applies 2D Spring to its orginal position,
+// when mouse is pressed, an attraction is applied 
+// since in the first test, I found preload() does not work when uploaded into server,
+// so I use a call back function in setup(), and a stupid method to ansure the image pixel is all loaded before draw() function is using
+// the method is check whether s[49] the last number in this array is null or not  ^_^ that's the only simple way I can think of, hahah
 
+var cnv;
+var img;
+var imgHeight= w = 50;
+var imgWidth = h = 50;
+var pic = [];
+var aa = 0;
 
-
+var s = [];
+var mass = 30.0;
+var gravity = 0.0;
 
 // function preload() {
-//   song = loadSound('opening scene.mp3');
+// 	// img = loadImage("assets/2.jpg");  // Load the image
 // }
+
 function setup() {
-  
-  
- 
-  
-  x=0;
-  y=0;
-  a=0;
-  b=1;
-  createCanvas(500,500);
-  // background(0);
-  for(var i=0;i<6;i++){
-    sun[i]=createImg("images/suns/sun.png")
-  }
-  // song.loop();
+ cnv=createCanvas(400, 400);
+ cnv.position(100,100)
+	loadImage("assets/3.jpg", function(img) {
+		img.loadPixels();
+		for (var x = 0; x < imgWidth; x++) {
+			for (var y = 0; y < imgHeight; y++) {
+				var loc = y * imgWidth + x; // calculate X, Y pixel number into Pixel Array
+				var bright = img.pixels[loc * 4]; // brightness 
+				if (y % 2 == 0) { // make arrangement of pixel differently
+					pic[loc] = createVector(x + 0.5, y, bright); // store image pixel data into 3 dimensional Vectors
+				} else {
+					pic[loc] = createVector(x, y, bright);
+				}
+			}
+		}
+
+		for (var i = 0; i < w; i++) {
+			s[i] = [];
+			for (var j = 0; j < h; j++) {
+				var n = j * imgWidth + i;
+				var b = map(pic[n].z, 0, 225, 6.0, 0); // map the brightness into ellipse size
+				var x2 = map(pic[n].x, 0, imgWidth, 0, width);
+				var y2 = map(pic[n].y, 0, imgHeight, 0, height);
+				s[i][j] = new Spring2D(x2, y2, mass, gravity, b); // apply into Spring 2D
+			}
+		}
+	}); // end with the call back
 }
 
 function draw() {
-  // song.play();
-  // createCanvas(windowWidth, windowHeight);
-  // background(0);
-  
-  TargetX= map(mouseX,0,width,10,0);
-  TargetY= map(mouseY,0,height,10,0);
-  
-  x=x+(TargetX-x)*0.05;
-  y+=(TargetY-y)*0.05;
- 
-  
-  randomSeed(9);
-  for(var i=0;i<6;i++){
-    
-    var size=random(150,300);
-    nx=(noise(i+a)-.5)*260;
-    ny=(noise(i+b)-.5)*260;
-   
-    sun[i].size(size,size);
-    sun[i].position(random(100,windowWidth-100)+x+nx,random(50,windowHeight/2)+y+ny);
-    sun[i].style('z-index', 0)
-  }
-  
-  // var start=window.document.getElementById("start");
-  // start.style('z-index', -1)
-  // print(start);
-  // image(x1,y1);
-  // fill(255,0,29);
-  // rect(100+x1,150+y1,400,400);
-  // fill(200,80,127);
-  // rect(150+x2,150+y2,300,300);
-  // fill(20,180,127);
-  // rect(300+x3,200+y3,200,200);
-  // fill(20,280,17);
-  // rect(150+x2,150+y2,300,300);
-  // fill(20,180,127);
-  // rect(300+x3,200+y3,200,200);
-  // fill(20,280,17);
-  // rect(400+x4,300+y4,100,100);
-  // image(img1, 200+x4,300+y4);
-  // rect(200+x4,300+y4,100,100);
-  a+=0.002;
-  b+=0.002;
-  
-  
-  
- 
+	background(255);
+	if (s[49] != null) { // make sure the image is already loaded
+		for (var i = 1; i < w; i++) {
+			for (var j = 1; j < h; j++) {
+				s[i][j].update();
+				s[i][j].show();
+			}
+		}
+
+		if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+			for (var i = 1; i < w; i++) {
+				for (var j = 1; j < h; j++) {
+					s[i][j].attraction(); // when mouse is in the window, apply attraction
+
+				}
+			}
+		}
+	}
 }
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
-// function mousePressed() {
-//   if ( song.isPlaying() ) { // .isPlaying() returns a boolean
-//     song.stop();
-//     background(255,0,0);
-//   } else {
-//     song.play();
-//     background(0,255,0);
-//   }
-// }

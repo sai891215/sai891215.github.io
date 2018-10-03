@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <title>Hou Yi</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="responsive-nav.css">
+        <script src="js/responsive-nav.js"></script>
+        <script src="js/p5/p5.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        
+           <script src="libraries/p5.js" type="text/javascript"></script>
+
+    <script src="libraries/p5.dom.js" type="text/javascript"></script>
+    <script src="libraries/p5.sound.js" type="text/javascript"></script>
+
+    <script src="sketch.js" type="text/javascript"></script>
+        
+        
+<!--        <script src="sketch.js"></script>-->
+        <script>
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            function myFunction(e) {
+                
+                console.log('asdasd');
+            
+                $('.startjourney').hover(
+                    function() {
+                        $('#start').attr("src", "images/final-stage-updated-withtxt-2.gif");
+                    },
+                    function() {
+                        $('#start').attr("src", "images/final-stage-updated-withtxt-3-first.png");
+                    }
+                );
+
+            var mouseX = e.clientX / windowWidth * 2;
+            var mouseY = e.clientY / windowHeight * 2;
+                // for debug
+//            var coor = "Coordinates: (" + mouseX + "," + mouseY + ")";
+//            document.getElementById("demo").innerHTML = coor;
+            // sun
+            var x = mouseX * 0.35;
+            var y = mouseY * 0.35;
+            // var sun1 = document.getElementById("sun1").style;
+            // sun1.transform = `translate3d(${x}%, -${y}%, 0)`;
+            // x = mouseX * 0.35;
+            // y = mouseY * 0.35;
+            // var sun2 = document.getElementById("sun2").style;
+            // sun2.transform = `translate3d(-${x}%, ${y}%, 0)`;
+            // x = mouseX * 0.35;
+            // y = mouseY * 0.35;
+            // var sun3 = document.getElementById("sun3").style;
+            // sun3.transform = `translate3d(${x}%, -${y}%, 0)`;
+            // x = mouseX * 0.35;
+            // y = mouseY * 0.35;
+            // var sun4 = document.getElementById("sun4").style;
+            // sun4.transform = `translate3d(-${x}%, ${y}%, 0)`;
+            // x = mouseX * 0.35;
+            // y = mouseY * 0.35;
+            // var sun5 = document.getElementById("sun5").style;
+            // sun5.transform = `translate3d(${x}%, ${y}%, 0)`;
+            // x = mouseX * 0.35;
+            // y = mouseY * 0.35;
+            // var sun6 = document.getElementById("sun6").style;
+            // sun6.transform = `translate3d(-${x}%, -${y}%, 0)`;
+            // hill
+            x = mouseX * 0.5;
+            y = mouseY * 0.5;
+            var hill1 = document.getElementById("hill1").style;
+            hill1.transform = `translate3d(-${x}%, -${y}%, 0)`;
+            x = mouseX * 1;
+            y = mouseY * 1;
+            var hill2 = document.getElementById("hill2").style;
+            hill2.transform = `translate3d(-${x}%, -${y}%, 0)`;
+            x = mouseX * 2;
+            y = mouseY * 1.5;
+            var hill3 = document.getElementById("hill3").style;
+            hill3.transform = `translate3d(-${x}%, -${y}%, 0)`;
+            x = mouseX * 5;
+            y = mouseY * 3;
+            var hill4 = document.getElementById("hill4").style;
+            hill4.transform = `translate3d(-${x}%, -${y}%, 0)`;  
+            }
+            
+            
+            var audio = new Audio('opening scene.mp3');
+            audio.play();
+        </script>
+
+    </head>
+    <body>
+       <div class="moving-layer-container">
+                <!-- <div class="sun-container">-->
+                <!--<img id = "sun1" class="sun sun1" src="images/suns/yi-sun1.png">-->
+                <!--<img id = "sun4" class="sun sun2" src="images/suns/yi-sun2.png">-->
+                <!--<img id = "sun6" class="sun sun3" src="images/suns/yi-sun3.png">-->
+                <!--<img id = "sun5" class="sun sun4" src="images/suns/yi-sun4.png">-->
+                <!--<img id = "sun3" class="sun sun5" src="images/suns/yi-sun5.png">-->
+                <!--<img id = "sun2" class="sun sun6" src="images/suns/yi-sun6.png">-->
+                <!--</div>-->
+                <!--</div>-->
+                 <div class="hill-container">
+                     <img id = "hill1" class="hill hill1" src="images/hills/yi-hill-furthest.png">
+                     <img id = "hill2" class="hill hill2" src="images/hills/yi-hill-middle.png">
+                     <img id = "hill3" class="hill hill3" src="images/hills/yi-hill-nearer.png">
+                     <img id = "hill4" class="hill hill4" src="images/hills/yi-hill-closest.png">
+                 </div>
+                 </div>
+              <!--    <img class="background" src="images/yi-backgroundimage.png"> -->
+                 <img class="darken" src="images/hills/yi-toplayer-vignette.png">
+        <div onmousemove="myFunction(event)" class="homecontainer">
+            <div class="nav-container">
+                <div class="col-xs-2">                    
+                    <a href="index.html"><img class="logo" id="logo" src="images/houyi-logo-finalArtboard-4.png"></a>
+                </div>
+                <div class="col-xs-10 nav">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+<!--            <div class="moving-images" id="moving">-->
+            <div class="title col-xs-12">
+                <div class="row">
+                    <!--<h1>Hou Yi and Ten Sun</h1>-->
+                     <img class="title1" src="images/title.png">
+                    <p>An immersive journey of a Chinese folklore.</p>
+                </div>
+                <div class="row align-items-center">
+                   <div class="col-xs-5"></div>    
+                    <div class="button col-xs-2">
+                   <!--  <img class="inkdrop" src="images/start-journey-interaction.gif"> -->
+                    <a class="start" href="game.html">
+                    <img id="start" class="startjourney" src="images/final-stage-updated-withtxt-3-first.png">
+                    </a>
+                    </div>
+                    <div class="col-xs-5"></div>
+                </div>
+            </div>
+            <div class="bottom col-xs-12">
+            <div class="bottomtext col-xs-12">
+                <p>THIS EXPERIENCE IS BEST VIEWED WITH<br> 
+A VR HEADSET AND A GOOD PAIR OF HEADPHONES</p>
+            </div>
+            <div class="bottomimage b1 col-xs-3">
+                    <p>Supported Platform:</p>
+            </div>
+            <div class="bottomimage b2 col-xs-9">
+                 <img class="platforms" src="images/platforms.png">
+            </div>
+            </div>
+        </div>
+        <p id="demo"></p>  
+        <div id="top-image"></div>
+        
+        
+        
+<!--          <img class="startjourney" id="imgDino" src="images/startjourney.png">-->
+                 
+<!--
+                 <script>
+            $(function() {
+                 $("#imgDino").hover(
+            function() {
+                $(this).attr("src", "images/start-journey-button.gif");
+            },
+            function() {
+                $(this).attr("src", "image/start-journey-interaction.gif");
+            }                         
+                 );                  
+            });
+                 </script> 
+-->
+        
+          
+        
+    </body>
+</html>
+
+
+
