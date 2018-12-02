@@ -1,74 +1,227 @@
-// this program is written in P5.js by Wu Shengzhi(www.wushengzhi.xyz)
-// I load every pixel of an image and map image data into 3 dimensional vector, inclusing X position, Y position and pixel brightness
-// the brightness is demonstrated by the ellipse size, the darker, the bigger
-// then every pixel is added into a particle system and then applies 2D Spring to its orginal position,
-// when mouse is pressed, an attraction is applied 
-// since in the first test, I found preload() does not work when uploaded into server,
-// so I use a call back function in setup(), and a stupid method to ansure the image pixel is all loaded before draw() function is using
-// the method is check whether s[49] the last number in this array is null or not  ^_^ that's the only simple way I can think of, hahah
-
-var cnv;
-var img;
-var imgHeight= w = 50;
-var imgWidth = h = 50;
-var pic = [];
-var aa = 0;
-
-var s = [];
-var mass = 30.0;
-var gravity = 0.0;
-
-// function preload() {
-// 	// img = loadImage("assets/2.jpg");  // Load the image
-// }
-
+var result, oldResult, currentResult;
+var flag =true;
+var y,x, r;
+var newQuery;
+var oldSpeechResult, newSpeechResult;
+var a = "no";
+var displayText;
+var colorHex = "no color";
+var myColor;
 function setup() {
- cnv=createCanvas(400, 400);
- cnv.position(100,100)
-	loadImage("assets/3.jpg", function(img) {
-		img.loadPixels();
-		for (var x = 0; x < imgWidth; x++) {
-			for (var y = 0; y < imgHeight; y++) {
-				var loc = y * imgWidth + x; // calculate X, Y pixel number into Pixel Array
-				var bright = img.pixels[loc * 4]; // brightness 
-				if (y % 2 == 0) { // make arrangement of pixel differently
-					pic[loc] = createVector(x + 0.5, y, bright); // store image pixel data into 3 dimensional Vectors
-				} else {
-					pic[loc] = createVector(x, y, bright);
-				}
-			}
-		}
-
-		for (var i = 0; i < w; i++) {
-			s[i] = [];
-			for (var j = 0; j < h; j++) {
-				var n = j * imgWidth + i;
-				var b = map(pic[n].z, 0, 225, 6.0, 0); // map the brightness into ellipse size
-				var x2 = map(pic[n].x, 0, imgWidth, 0, width);
-				var y2 = map(pic[n].y, 0, imgHeight, 0, height);
-				s[i][j] = new Spring2D(x2, y2, mass, gravity, b); // apply into Spring 2D
-			}
-		}
-	}); // end with the call back
+    colorMode(HSB, 255);
+    canvas = createCanvas(window.innerWidth, window.innerHeight);
+    canvas.position(0,0);
+    canvas.style('z-index',-1);
+    y= 0;
+    x= 0;
+    oldResult = "hello";
+    result = "no result";
+    r =100;
+    newQuery = false;
+    oldSpeechResult = document.getElementById("note-textarea").value;
+    newSpeechResult = oldSpeechResult;
+    currentResult = "nothing for now";
+    
+    document.getElementById("note-textarea").style.display= "none";
+    displayText = document.getElementById("display-text");
+    myColor = color('#0f0');
 }
 
 function draw() {
-	background(255);
-	if (s[49] != null) { // make sure the image is already loaded
-		for (var i = 1; i < w; i++) {
-			for (var j = 1; j < h; j++) {
-				s[i][j].update();
-				s[i][j].show();
-			}
-		}
+    background(230);
+    if(oldResult != result){
+        flag = true;
+        oldResult = result;
+    }
+    if(flag || newQuery){
+        if(result == "Smaller"){
+            r -= 20;
+            flag = false;
+        }
+        if(result == "Bigger"){
+            r += 20;
+            flag = false;
+        }
+        if(result == "Lower"){
+            y += 20;
+        }
+        if(result == "Higher"){
+            y -= 20;
+        }
+        if(result == "Left"){
+            x -= 20;
+        }
+        if(result == "Right"){
+            x += 20;
+        }
+        if(result == "Color"){
+            myColor = colorHex;
+        }
+        if(result == "Bright"){
+            
+            colorMode(HSB, 255);
+            
+            var newHue = hue(myColor) * 1;
+            var newBrightness =  brightness(myColor) * 1.2;
+            var newSaturation =  saturation(myColor) * 1;
+            
+            var newColor = color (newHue, newSaturation, newBrightness)
+            myColor = newColor;
+        }
+        flag = false;
+        newQuery = false;
 
-		if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
-			for (var i = 1; i < w; i++) {
-				for (var j = 1; j < h; j++) {
-					s[i][j].attraction(); // when mouse is in the window, apply attraction
-
-				}
-			}
-		}
-	}
+    }
+    fill(myColor);
+    noStroke();
+    ellipse(x + window.innerWidth/2,
+            y + window.innerHeight/2, 
+            r,r);
+    
+    newSpeechResult = document.getElementById("note-textarea").value;
+    
+    if(newSpeechResult != oldSpeechResult){
+        
+        
+        var recognizedText= newSpeechResult.replace(oldSpeechResult,"");
+        newQueryToDialogFlow(recognizedText);
+        oldSpeechResult = newSpeechResult;
+        document.getElementById("display-text").innerHTML= recognizedText;
+        newQuery = true;
+    }
+  
 }
+var ChangeHSBColor = function(hueValue, sValue, bValue){
+    colorMode(HSB, 255);
+   
+    var newHue = hue(myColor) * this.hueValue;
+    var newBrightness =  brightness(myColor) * this.bVlue;
+    var newSaturation =  saturation(myColor) * this.sValue;
+    print(this.hueVaue);
+    var newColor = color (newHue, newSaturation, newBrightness)
+    myColor = color(this.hueValue, 255,255);
+    fill(20,20,20);
+    text("hue " + this.hue, 10,10);
+};
+window.onresize = function() {
+  var w = window.innerWidth;
+  var h = window.innerHeight;  
+  canvas.size(w,h);
+  width = w;
+  height = h;
+  canvas.position(0,0);
+  canvas.style('z-index',-1);
+
+};
+
+
+
+function newQueryToDialogFlow(myQuery){
+    value = myQuery;
+    a= "yes";
+    sendText(value)
+      .then(function(response) {
+        
+        try {
+          result = response.result.metadata.intentName;
+          colorHex = response.result.parameters.Color;
+        } catch(error) {
+          result = "";
+        }
+        
+//        setResponseJSON(response);
+//        setResponseOnNode(result, responseNode);
+      })
+      .catch(function(err) {
+        setResponseJSON(err);
+      });
+}
+
+
+
+(function() {
+  "use strict";
+
+  var ENTER_KEY_CODE = 13;
+  var queryInput, resultDiv, accessTokenInput;
+
+  window.onload = init;
+
+  function init() {
+    queryInput = document.getElementById("q");
+    resultDiv = document.getElementById("result");
+//    accessTokenInput = document.getElementById("access_token");
+//    var setAccessTokenButton = document.getElementById("set_access_token");
+    window.init("tokenplaceholder");
+    queryInput.addEventListener("keydown", queryInputKeyDown);
+    document.getElementById("main-wrapper").style.display = "block";
+//    setAccessToken();
+   // setAccessTokenButton.addEventListener("click", setAccessToken);
+  }
+
+ 
+  function queryInputKeyDown(event) {
+    if (event.which !== ENTER_KEY_CODE) {
+      return;
+    }
+
+    var value = queryInput.value;
+    
+    queryInput.value = "";
+    
+    createQueryNode(value);
+    //var responseNode = createResponseNode();
+
+    sendText(value)
+      .then(function(response) {
+        
+        try {
+          result = response.result.metadata.intentName;
+          colorHex = response.result.parameters.Color;
+          newQuery = true;
+        } catch(error) {
+          result = "";
+        }
+        setResponseJSON(response);
+        
+        //setResponseJSON(response);
+        //setResponseOnNode(result, responseNode);
+      })
+      .catch(function(err) {
+        setResponseJSON(err);
+        //setResponseOnNode("Something goes wrong", responseNode);
+      });
+  }
+
+  function createQueryNode(query) {
+//    var node = document.createElement('div');
+//    node.className = "clearfix left-align left card-panel green accent-1";
+//    node.innerHTML = query;
+//    resultDiv.appendChild(node);
+//       newQuery = true;
+  }
+
+  function createResponseNode() {
+//    var node = document.createElement('div');
+//    node.className = "clearfix right-align right card-panel blue-text text-darken-2 hoverable";
+//    node.innerHTML = "";
+//    resultDiv.appendChild(node);
+//    return node;
+     
+  }
+
+  function setResponseOnNode(response, node) {
+    node.innerHTML = response ? response : "[empty response]";
+    node.setAttribute('data-actual-response', response);
+  }
+
+  function setResponseJSON(response) {
+//    var node = document.getElementById("jsonResponse");
+//    node.innerHTML = JSON.stringify(response, null, 2);
+  }
+
+  function sendRequest() {
+
+  }
+
+})();
