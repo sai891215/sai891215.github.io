@@ -1,99 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-    <script src="ApiAi.js"></script>
-    <script src="demoFunctions.js"></script>
-    
+    <title>imagSpring</title>
     <script src="libraries/p5.js" type="text/javascript"></script>
-
     <script src="libraries/p5.dom.js" type="text/javascript"></script>
-    <script src="libraries/p5.sound.js" type="text/javascript"></script>
-
     <script src="sketch.js" type="text/javascript"></script>
+    <script src="spring2D.js" type="text/javascript"></script>
 
-    <style>
-        #placeholder {
-            text-align: center;
-            margin-top: 1.5em;
-        }
-        #main-wrapper {
-            display: none;
-        }
-        .clearfix {
-            clear: both;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-  
-    <div class="row">
-   
-   
-    <div class="row">
-<!--        <h5>Configure demo:</h5>-->
-    </div>
-    <div class="row">
-<!--
-        <div class="input-field col s10">
-            <input id="access_token" type="text" >
-            <label for="access_token">Access token</label>
-        </div>
--->
-<!--
-        <div class="col s2 input-field">
-            <a class="waves-effect waves-light btn" id="set_access_token">Set</a>
-        </div>
--->
-    </div>
-</div>
-<!--
-<div id="placeholder">
-    <h5>Please, fill access token before start</h5>
-</div>
--->
-<div id="main-wrapper">
-    <div class="container">
-        <div class="row">
-            <div class="col s5">
-                <div class="input-field">
-                    <input placeholder="Hey, ask me something..." id="q" type="text" >
-                </div>
-                
-                <div id="result">
-               <textarea id="note-textarea" placeholder="Create a new note by typing or using voice recognition." rows="6"></textarea>
-                </div>
-                <div id= "display-text">
-                   Nothing to display now
-                <p> </p>
-                </div>
-                <div>
-                     
-                    <button id="start-record-btn" title="Start Recording">Start Recognition</button>
-                    <button id="pause-record-btn" title="Pause Recording">Pause Recognition</button>
-                </div>
-            </div>
-         
-            <div class="col s5">
-            <!--h5>Request payload:</h5>
-            <pre id="jsonRequest"></pre-->
-<!--           //<h5>Response payload:</h5>-->
-            <pre id="jsonResponse"></pre>
-            </div>
-        </div>
-    </div>
-</div>
-    </div>
-<script defer src="layout.js"></script>
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="script.js"></script>
-</body>
+    <style> body {padding: 0; margin: 0;} canvas {vertical-align: top;} </style>
+  </head>
+  <body>
+  </body>
 </html>
